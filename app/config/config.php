@@ -1,5 +1,13 @@
 <?php
 
+// define('base_url', 'http://localhost/reza/index.php');
+
+// define('DB_HOST', 'localhost');
+// define('DB_USER', 'riyanris');
+// define('DB_PASS', '1234');
+// define('DB_NAME', 'sk_reza');
+
+
 define('base_url', 'https://mysterious-retreat-39792.herokuapp.com/index.php');
 
 define('DB_HOST', 'us-cdbr-east-04.cleardb.com');
