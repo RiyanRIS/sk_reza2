@@ -1,9 +1,9 @@
 var CACHE_NAME = "sk_reza-master";
 var urlsToCache = [
-  "/"
+  "/",
   // "app/config/config.php"
   // "app/controller"
-  // 'fallback.php',
+  'fallback.php',
 ];
 
 self.addEventListener("install", (e) => {
