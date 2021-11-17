@@ -8,6 +8,8 @@ function toUrl($jenis, $file)
     return "uploads/profil/kampus/".$file;
   }elseif($jenis == "img_lembaga"){
     return "uploads/profil/lembaga/".$file;
+  }elseif($jenis == "file_sk"){
+    return "uploads/profil/sk/".$file;
   }
 }
 

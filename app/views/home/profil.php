@@ -64,6 +64,61 @@
       </div>
     </div>
 
+    <div class="col-md-12 mb-3">
+      <div class="card box-shadow p-5">
+        <h3>TAHUN PERIODE</h3>
+        <table class="table table-bordered">
+          <tr>
+            <th>Tahun</th>
+            <th>Nama Periode</th>
+            <th>Surat Keputusan</th>
+            <th>Hapus Data</th>
+          </tr>
+          <?php foreach ($data['periode'] as $key) { ?>
+          <tr>
+            <td><?= $key['tahun'] ?></td>
+            <td><?= $key['nama'] ?></td>
+            <td><a target="_BLANK" href="<?= toUrl("file_sk", $key['sk']) ?>">download file sk</a></td>
+            <td><a href="<?= site_url("home/hapus_periode/". $key['id']) ?>">hapus</a></td>
+          </tr>
+          <?php } ?>
+        
+        </table>
+      </div>
+    </div>
+
+    
+    <div class="col-md-12 mb-3">
+      <div class="card box-shadow p-5">
+        <h3>INPUT PERIODE</h3>
+        <form action="<?= site_url('home/aksi_periode') ?>" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="tahunn">Tahun</label>
+            <input type="text"
+              class="form-control" required="true" name="tahun" id="tahunn" aria-describedby="sistem" placeholder="2020/2021">
+          </div>
+
+          <div class="form-group">
+            <label for="namaa">NAMA KABINET</label>
+            <input type="text"
+              class="form-control" required="true" name="nama" id="namaa" aria-describedby="nama" placeholder="NAMA KABINET">
+          </div>
+          
+          <div class="form-group">
+            <label for="sk">SURAT KEPUTUSAN</label>
+            <input type="file" name="sk">
+          </div>
+
+          <?php if(isAdmin()){ ?>
+          
+          <input name="btn_simpann" id="btn_simpann" class="btn btn-primary" type="submit" value="Simpan"> <a href="<?= site_url('home') ?>" class="btn btn-danger">Batal</a>
+
+          <?php } ?>
+
+        </form>
+      </div>
+    </div>
+
   </div>
 </div>
 

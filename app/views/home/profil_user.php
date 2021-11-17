@@ -13,12 +13,19 @@
 
         <table class="table table-bordered">
           <tr>
-            <td colspan="2" style="text-align:center"><h1><?= $data['profil']['lembaga'] ?> <br><?= $data['profil']['kampus'] ?></h1></td>
+            <td colspan="3" style="text-align:center"><h1><?= $data['profil']['lembaga'] ?> <br><?= $data['profil']['kampus'] ?></h1></td>
           </tr>
           <tr>
             <td><img width="120px" src="<?= toUrl("img_lembaga", $data['profil']['logo_lembaga']) ?>"></td>
-            <td><h4><?= $data['profil']['penjelasan'] ?></h4></td>
+            <td colspan="2"><h4><?= $data['profil']['penjelasan'] ?></h4></td>
           </tr>
+          <?php foreach ($data['periode'] as $key) { ?>
+          <tr>
+            <td><?= $key['tahun'] ?></td>
+            <td><?= $key['nama'] ?></td>
+            <td><a target="_BLANK" href="<?= toUrl("file_sk", $key['sk']) ?>">download file sk</a></td>
+          </tr>
+          <?php } ?>
         </table>
         <a href="<?= site_url('home') ?>" class="btn btn-primary w-25">Kembali</a>
       </div>

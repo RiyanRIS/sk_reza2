@@ -17,11 +17,23 @@ class Home extends Controller {
 	{
 		$data['judul'] = 'Profil';
 		$data['profil'] = model("ProfilModel")->getProfil();
+		$data['periode'] = model("PeriodeModel")->getAll();
 		if(isAdmin()){
 			view('home/profil', $data);
 		} else {
 			view('home/profil_user', $data);
 		}
+	}
+
+	public function hapus_periode($a){
+		$hapus = model('PeriodeModel')->hapus($a);
+
+		if($hapus == true){
+			setMsg("Berhasil manghapus data.");
+		}else{
+			setMsg($hapus);
+		}
+    header('location: '. site_url('home/profil'));
 	}
 
 	public function aksi_profil()
@@ -62,6 +74,37 @@ class Home extends Controller {
 				$profil = model('ProfilModel')->getProfil();
   			$_SESSION['PROFIL'] = $profil;
 				setMsg("Berhasil memperbarui data.");
+			}else{
+				setMsg($simpan);
+			}
+    }
+    header('location: '. site_url('home/profil'));
+	}
+
+	public function aksi_periode()
+	{
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			if(!isAdmin()){
+				setMsg("Kamu tidak berhak mengakses halaman ini.");
+				header('location: '. site_url('home/profil'));
+			}
+
+			if(!empty($_FILES["sk"]["name"])){
+				$img_lembaga = time() . "-" . basename($_FILES["sk"]["name"]);
+				$target_dir = "uploads/profil/sk/";
+				$target_file = $target_dir . $img_lembaga;
+				// $target_file = basename($_FILES["img_lembaga"]["name"]);
+				if (!move_uploaded_file($_FILES["sk"]["tmp_name"], $target_file)) {
+					echo "Sorry, there was an error uploading your file.||".$_FILES['sk']['error']."||".$target_file;
+					die();
+				}
+				$_POST['sk'] = $img_lembaga;
+			}
+
+			$simpan = model('PeriodeModel')->simpan($_POST);
+
+			if($simpan == true){
+				setMsg("Berhasil menambah data.");
 			}else{
 				setMsg($simpan);
 			}
