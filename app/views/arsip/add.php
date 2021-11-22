@@ -72,11 +72,11 @@
 
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="file">FILE</label>
             <input type="file" required="true" class="form-control-file" name="file" id="file" placeholder="FILE" aria-describedby="fileHelpId">
-            <!-- <small id="fileHelpId" class="form-text text-muted">*doc, pdf, </small> -->
-          </div>
+            <small id="fileHelpId" class="form-text text-muted">*doc, pdf, </small>
+          </div> -->
           <div class="form-group">
             <label for="catatan">CATATAN</label>
             <input type="text" class="form-control" name="catatan" id="catatan" aria-describedby="helpNamaArsip" <?= val("arsip_add", "catatan") ?> placeholder="Catatan Arsip(Tidak Wajib)">

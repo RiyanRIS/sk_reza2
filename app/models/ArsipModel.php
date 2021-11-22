@@ -50,7 +50,7 @@ class ArsipModel {
 
 	public function simpan($data)
 	{
-		$query = "INSERT INTO ". $this->table ."(`kode`, `nama`, `jenis`, `tanggal`, `jam`, `file`, `catatan`, `id_users`, `created_at`) VALUES (:kode, :nama, :jenis, :tanggal, :jam, :file, :catatan, :id_users, :created_at)";
+		$query = "INSERT INTO ". $this->table ."(`kode`, `nama`, `jenis`, `tanggal`, `jam`, `catatan`, `id_users`, `created_at`) VALUES (:kode, :nama, :jenis, :tanggal, :jam, :catatan, :id_users, :created_at)";
 
 		$this->db->query($query);
 		$this->db->bind('kode',$data['kode']);
@@ -58,7 +58,7 @@ class ArsipModel {
 		$this->db->bind('jenis',$data['jenis']);
 		$this->db->bind('tanggal',$data['tanggal']);
 		$this->db->bind('jam',$data['jam']);
-		$this->db->bind('file',$data['file']);
+		// $this->db->bind('file',$data['file']);
 		$this->db->bind('catatan',$data['catatan']);
 		$this->db->bind('id_users',$data['id_users']);
 		$this->db->bind('created_at',time());
@@ -67,14 +67,15 @@ class ArsipModel {
 		if( !empty($this->db->errorInfo()) ){  
 			$errorLogMsg = "error info:" . implode(":", $this->db->errorInfo());
 			return $errorLogMsg;
+			// return $this->db->getLastId();
 		} else {
-			return true;
+			return $this->db->getLastId();
 		}
 	}
 
 	public function ubah($data)
 	{
-		$query = "UPDATE ". $this->table ." SET `kode`=:kode,`nama`=:nama,`jenis`=:jenis,`tanggal`=:tanggal,`jam`=:jam,`file`=:file,`catatan`=:catatan,`id_users`=:id_users WHERE `id`=:id";
+		$query = "UPDATE ". $this->table ." SET `kode`=:kode,`nama`=:nama,`jenis`=:jenis,`tanggal`=:tanggal,`jam`=:jam,`catatan`=:catatan,`id_users`=:id_users WHERE `id`=:id";
 
 		$this->db->query($query);
 		$this->db->bind('kode',$data['kode']);
@@ -82,7 +83,7 @@ class ArsipModel {
 		$this->db->bind('jenis',$data['jenis']);
 		$this->db->bind('tanggal',$data['tanggal']);
 		$this->db->bind('jam',$data['jam']);
-		$this->db->bind('file',$data['file']);
+		// $this->db->bind('file',$data['file']);
 		$this->db->bind('catatan',$data['catatan']);
 		$this->db->bind('id_users',$data['id_users']);
 		$this->db->bind('id',$data['id']);

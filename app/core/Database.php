@@ -77,5 +77,10 @@ class Database{
 	{
 		return $this->stmt->errorInfo();
 	}
+
+	public function getLastId()
+	{
+		return $this->stmt->lastInsertId();
+	}
 }
 

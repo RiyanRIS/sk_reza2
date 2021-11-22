@@ -75,11 +75,10 @@
 
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="file">FILE</label>
             <input type="file" class="form-control-file" name="new_file" id="file" placeholder="FILE" aria-describedby="fileHelpId">
-            <!-- <small id="fileHelpId" class="form-text text-muted">*doc, pdf, </small> -->
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="catatan">CATATAN</label>
             <input type="text" class="form-control" name="catatan" id="catatan" aria-describedby="helpNamaArsip" <?= val("arsip_edit", "catatan") ?> placeholder="Catatan Arsip(Tidak Wajib)">

@@ -16,8 +16,57 @@ class Arsip extends Controller {
 	public function detail($id)
 	{
 		$data['judul'] = 'Detail Arsip';
+		$data['kode_arsip'] = $id;
+		$data['list_berkas'] = model("DetailArsipModel")->getBy($id);
 		$_SESSION['arsip_detail'] = model("ArsipModel")->get($id);
 		view('arsip/detail', $data);
+	}
+
+	function aksi_add_detail(){
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			if(!isAdmin()){
+				setMsg("Kamu tidak berhak mengakses halaman ini.", "error");
+			header('location: '. site_url('arsip'));
+			return;
+			}
+			// $nama_arsip = time() . "-" . basename($_FILES["file"]["name"]);
+			$nama_arsip = basename($_FILES["file"]["name"]);
+			$target_dir = "uploads/arsip/";
+			$target_file = $target_dir . $nama_arsip;
+
+			if (!move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+				echo "Sorry, there was an error uploading your file.||".$_FILES['file']['error']."||".$target_file;
+				die();
+			}
+
+			$_POST['file'] = $nama_arsip;
+
+			$simpan = model("DetailArsipModel")->simpan($_POST);
+
+			if($simpan){
+				setMsg("Berhasil menambah data.");
+				header('location: '. site_url('arsip/detail/'.$_POST['code']));
+			}else{
+				setMsg("Terjadi masalah dalam penambahan data.", "error");
+			}
+		}
+
+	}
+
+	function hapusdetailarsip($id, $id_nya){
+		if(!isAdmin()){
+			setMsg("Kamu tidak berhak mengakses halaman ini.", "error");
+			header('location: '. site_url('arsip'));
+			return;
+		}
+
+		$delete = model("DetailArsipModel")->hapus($id);
+		if($delete){
+			setMsg("Berhasil menghapus data.");
+			header('location: '. site_url('arsip/detail/'.$id_nya));
+		}else{
+			setMsg("Terjadi masalah dalam penghapusan data.", "error");
+		}
 	}
 
 	public function add()
@@ -52,16 +101,16 @@ class Arsip extends Controller {
 				$status = 0;
 			}
 
-			$nama_arsip = time() . "-" . basename($_FILES["file"]["name"]);
-			$target_dir = "uploads/arsip/";
-			$target_file = $target_dir . $nama_arsip;
+			// $nama_arsip = time() . "-" . basename($_FILES["file"]["name"]);
+			// $target_dir = "uploads/arsip/";
+			// $target_file = $target_dir . $nama_arsip;
 
-			if (!move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-				echo "Sorry, there was an error uploading your file.||".$_FILES['file']['error']."||".$target_file;
-				die();
-			}
+			// if (!move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+			// 	echo "Sorry, there was an error uploading your file.||".$_FILES['file']['error']."||".$target_file;
+			// 	die();
+			// }
 
-			$_POST['file'] = $nama_arsip;
+			// $_POST['file'] = $nama_arsip;
 
 			if($status){
 				
@@ -73,6 +122,10 @@ class Arsip extends Controller {
 				$_POST['id_users'] = $_SESSION['log_id'];
 
 				$simpan = model("ArsipModel")->simpan($_POST);
+
+				// $_POST['code'] = $simpan;
+				// $sim_file = model("DetailArsipModel")->simpan($_POST);
+
 				if($simpan){
 					setMsg("Berhasil menambah data.");
 					header('location: '. site_url('arsip'));
