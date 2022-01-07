@@ -18,6 +18,7 @@ class Arsip extends Controller {
 		$data['judul'] = 'Detail Arsip';
 		$data['kode_arsip'] = $id;
 		$data['list_berkas'] = model("DetailArsipModel")->getBy($id);
+		$data['list_berkas2'] = model("DetailArsipModel")->getBelum($id);
 		$_SESSION['arsip_detail'] = model("ArsipModel")->get($id);
 		view('arsip/detail', $data);
 	}
@@ -25,9 +26,10 @@ class Arsip extends Controller {
 	function aksi_add_detail(){
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			if(!isAdmin()){
-				setMsg("Kamu tidak berhak mengakses halaman ini.", "error");
-			header('location: '. site_url('arsip'));
-			return;
+				// setMsg("Kamu tidak berhak mengakses halaman ini.", "error");
+				// header('location: '. site_url('arsip'));
+				// return;
+				$_POST['is_verif'] = 0;
 			}
 			// $nama_arsip = time() . "-" . basename($_FILES["file"]["name"]);
 			$nama_arsip = basename($_FILES["file"]["name"]);
@@ -41,6 +43,7 @@ class Arsip extends Controller {
 
 			$_POST['file'] = $nama_arsip;
 
+			// print_r($_POST); die();
 			$simpan = model("DetailArsipModel")->simpan($_POST);
 
 			if($simpan){
@@ -51,6 +54,28 @@ class Arsip extends Controller {
 			}
 		}
 
+	}
+
+	function tolak($id, $data){
+		$simpan = model("DetailArsipModel")->hapus($id);
+
+		if($simpan){
+			setMsg("Berhasil menolak berkas.");
+			header('location: '. site_url('arsip/detail/'.$data));
+		}else{
+			setMsg("Terjadi masalah dalam penolakan data.", "error");
+		}
+	}
+
+	function verif($id, $data){
+		$simpan = model("DetailArsipModel")->verif($id);
+
+		if($simpan){
+			setMsg("Berhasil memverifikasi berkas.");
+			header('location: '. site_url('arsip/detail/'.$data));
+		}else{
+			setMsg("Terjadi masalah dalam verifikasi data.", "error");
+		}
 	}
 
 	function hapusdetailarsip($id, $id_nya){

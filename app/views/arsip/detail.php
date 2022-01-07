@@ -10,11 +10,9 @@
     <div class="col-md-12 mb-3">
       <div class="card box-shadow p-5">
         <h3>Detail Arsip
-          <?php if(isAdmin()){ ?>
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal" title="Tambah Data">
+          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal" title="Tambah Data">
             <i class="fa fa-plus" aria-hidden="true"></i> Tambah
-            </button>
-          <?php } ?>
+          </button>
         </h3>
         <table class="table table-bordered">
           <tr>
@@ -36,6 +34,25 @@
               <?php } } ?>
               
               </table>
+              <?php if(isAdmin()){ ?>
+                <?php if(count($data['list_berkas2']) == 0){ ?>
+                  
+              <?php } else { ?> 
+                <h4>Berkas diusulkan</h4>
+              <table>
+                <?php foreach($data['list_berkas2'] as $key){ ?>
+                <tr><td>
+                <a href="<?= toUrl("arsip", $key['nama_file']) ?>"><?= $key['nama_file'] ?></a> </td>
+                  <td>
+                    <a href="<?= site_url("arsip/tolak/".$key['id']."/".$data['kode_arsip']) ?>" class="btn btn-sm btn-danger float-right">tolak</a>
+                    <a href="<?= site_url("arsip/verif/".$key['id']."/".$data['kode_arsip']) ?>" class="btn btn-sm btn-primary float-right">verifikasi</a>
+                  </td>
+              
+              </tr>
+              <?php } ?>
+              </table>
+              <?php } } ?>
+
             </td>
           </tr>
           <tr>
@@ -66,7 +83,7 @@
           <label for="file">FILE</label>
           <input type="hidden" name="code" value="<?= $data['kode_arsip'] ?>">
           <input type="file" required="true" class="form-control-file" name="file" id="file" placeholder="FILE" aria-describedby="fileHelpId">
-          <small id="fileHelpId" class="form-text text-muted">*doc, pdf, </small>
+          <small id="fileHelpId" class="form-text text-muted">*png, jpg </small>
         </div>
       </div>
       <div class="modal-footer">
